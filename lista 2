@@ -1,0 +1,48 @@
+import numpy as np 
+from time import time
+import sys
+
+class MyArray():
+    def __init__(self, capacity):
+        self.nparray= np.empty(capacity, dtype=object)
+        self.cap=capacity
+        self.size=0
+    def appendar(self,number):
+        if self.size == self.cap:
+            self.nparray.resize()
+        self.nparray[self.size] = number
+    def change_size(self):
+        new_nparray= np.empty(self.cap*2, dtype=object)
+        new_nparray[:self.size]= self.nparray
+        self.nparray=self.new_nparray
+        self.cap=self.cap*2
+
+list_1 = [0] 
+np_array = MyArray([0])  
+
+t_list  = 0
+t_np    = 0
+
+for i in range(1024):
+
+    sa1 = time()
+    sa2 = time()
+
+    list_1.append(i + 1)
+    sa3 = time()
+
+    np_array = np.append(np_array, np.uint16(i + 1))
+    sa4 = time()
+
+    print(f'=== {i} ===')
+    print(f'list_1 memory size   = {sys.getsizeof(list_1)} bytes - time = {sa3-sa2:.4}')
+    print(f'np_array memory size = {sys.getsizeof(np_array)} bytes - time = {sa4-sa3:.4}')
+
+    t_list  += sa3 - sa2
+    t_np    += sa4 - sa3
+
+print(f'Total time for Python List  = {t_list:.4f} seconds')
+print(f'Total time for NumPy Array  = {t_np:.4f} seconds')
+        
+
+
