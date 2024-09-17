@@ -1,24 +1,34 @@
+#Questão 1
+
 import numpy as np 
 from time import time
 import sys
 
 class MyArray():
-    def __init__(self, capacity):
-        self.nparray= np.empty(capacity, dtype=object)
-        self.cap=capacity
-        self.size=0
-    def appendar(self,number):
-        if self.size == self.cap:
-            self.nparray.resize()
-        self.nparray[self.size] = number
-    def change_size(self):
-        new_nparray= np.empty(self.cap*2, dtype=object)
-        new_nparray[:self.size]= self.nparray
-        self.nparray=self.new_nparray
-        self.cap=self.cap*2
+    def __init__(self, capacity, lista=[]):
+        self.nparray = np.empty(capacity, dtype=object)
+        self.cap = capacity
+        self.size = 0
 
-list_1 = [0] 
-np_array = MyArray([0])  
+        if lista != []:
+            for i in lista:
+                self.append(i)
+
+    def append(self, number):
+        if self.size == self.cap:
+            self.change_size()
+        self.nparray[self.size] = number
+        self.size += 1
+
+    def change_size(self):
+        new_cap = self.cap * 2
+        new_nparray = np.empty(new_cap, dtype=object)
+        new_nparray[:self.size] = self.nparray
+        self.nparray = new_nparray
+        self.cap = new_cap
+
+    def __repr__(self):
+        return str(self.nparray[:self.size])
 
 t_list  = 0
 t_np    = 0
@@ -43,6 +53,18 @@ for i in range(1024):
 
 print(f'Total time for Python List  = {t_list:.4f} seconds')
 print(f'Total time for NumPy Array  = {t_np:.4f} seconds')
-        
+
+#Questão 2
+
+class ToroArray(MyArray):
+    def __init__(self, capacity, lista):
+        super().__init__(capacity, lista)
+
+    def __getitem__(self, position):
+        return self.nparray[position%self.size]
+    
+    
+array=ToroArray(1, [10, 11, 12, 13, 14])
+print(array[-20])
 
 
