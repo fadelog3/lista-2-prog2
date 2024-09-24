@@ -30,29 +30,38 @@ class MyArray():
     def __repr__(self):
         return str(self.nparray[:self.size])
 
+#Com esse código usado para comparar os tempos entre appendar elementos na lista e no MyArray vemos que o menor tempo é das listas. Isso pode ocorrer, pois o array gasta tempo duplicando o seu tamanho 
+#e também pelo fato de que a complexidade de adicionar um elemento na lista é O(1) e no array pode ser até 0(n).
+
+list_1 = [] 
+array = MyArray(1)  # Inicia com capacidade 1
+
 t_list  = 0
 t_np    = 0
 
+# Loop que appenda 1024 elementos na lista e em MyArray
+
 for i in range(1024):
 
-    sa1 = time()
-    sa2 = time()
+    # Medindo tempo de appendar na lista
 
+    sa2 = time()
     list_1.append(i + 1)
     sa3 = time()
 
-    np_array = np.append(np_array, np.uint16(i + 1))
+    # Medindo tempo de appendar no MyArray
+
     sa4 = time()
+    array.append(i + 1)  # Usar o método append da classe MyArray
+    sa5 = time()
 
-    print(f'=== {i} ===')
-    print(f'list_1 memory size   = {sys.getsizeof(list_1)} bytes - time = {sa3-sa2:.4}')
-    print(f'np_array memory size = {sys.getsizeof(np_array)} bytes - time = {sa4-sa3:.4}')
+    t_list += (sa3 - sa2)
+    t_np += (sa5 - sa4)
 
-    t_list  += sa3 - sa2
-    t_np    += sa4 - sa3
+# Printando o tempo total dos dois
 
 print(f'Total time for Python List  = {t_list:.4f} seconds')
-print(f'Total time for NumPy Array  = {t_np:.4f} seconds')
+print(f'Total time for MyArray  = {t_np:.4f} seconds')
 
 #Questão 2
 
