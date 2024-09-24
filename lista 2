@@ -30,6 +30,9 @@ class MyArray():
     def __repr__(self):
         return str(self.nparray[:self.size])
 
+array=MyArray(1, [7,8,9,10, 11])
+print(array)
+
 #Com esse código usado para comparar os tempos entre appendar elementos na lista e no MyArray vemos que o menor tempo é das listas. Isso pode ocorrer, pois o array gasta tempo duplicando o seu tamanho 
 #e também pelo fato de que a complexidade de adicionar um elemento na lista é O(1) e no array pode ser até 0(n).
 
